@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="hero rounded-4 p-4 position-relative overflow-hidden mb-5">
+  <div class="row align-items-center">
+    <div class="col-lg-6">
+      <h1 class="display-5 hero-title">Discover your monthly carbon footprint</h1>
+      <p class="lead hero-sub">A friendly ML-backed calculator with personalized tips to reduce your footprint.</p>
+
+      <div class="d-flex gap-2">
+        <a href="{{ url_for('personal') }}" class="btn btn-lg btn-cta">Start calculator</a>
+        <button id="quickEstimateBtn" class="btn btn-lg btn-outline-dark">Quick estimate</button>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-lg btn-link">Dashboard</a>
+      </div>
+
+      <div class="mt-4">
+        <small class="text-muted">Prefer a fast check? Use the Quick Estimate modal to try sample inputs and see approximate savings.</small>
+      </div>
+    </div>
+
+    <div class="col-lg-6 text-center">
+      <img src="{{ url_for('static', filename='img/earth.png') }}" alt="earth" class="img-fluid hero-art" />
+    </div>
+  </div>
+
+  <!-- subtle floating badges -->
+  <div class="floating-badges">
+    <span class="badge bg-pale">Travel</span>
+    <span class="badge bg-paler">Energy</span>
+    <span class="badge bg-soft">Waste</span>
+    <span class="badge bg-pale">Diet</span>
+  </div>
+</div>
+
+<!-- feature cards -->
+<div class="row gx-4 gy-4 mb-5">
+  <div class="col-md-6 col-lg-3">
+    <div class="feature-card" onclick="location.href='{{ url_for('personal') }}'">
+      <h5>Personal</h5>
+      <p class="small">Height, weight, shower & lifestyle — quick inputs that matter.</p>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-3">
+    <div class="feature-card" onclick="location.href='{{ url_for('travel') }}'">
+      <h5>Travel</h5>
+      <p class="small">Car, public transport & flights — see their impact.</p>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-3">
+    <div class="feature-card" onclick="location.href='{{ url_for('waste') }}'">
+      <h5>Waste</h5>
+      <p class="small">Recycling & waste habits — small changes, big effect.</p>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-3">
+    <div class="feature-card" onclick="location.href='{{ url_for('energy') }}'">
+      <h5>Energy</h5>
+      <p class="small">Home heating, appliances & screen time.</p>
+    </div>
+  </div>
+</div>
+
+<!-- quick estimator modal -->
+<div class="modal fade" id="quickEstimateModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form id="quickEstimateForm" class="p-3">
+        <div class="modal-header">
+          <h5 class="modal-title">Quick Carbon Estimate</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Monthly grocery bill</label>
+            <input id="qe_grocery" class="form-control" type="number" value="200">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Vehicle monthly km</label>
+            <input id="qe_km" class="form-control" type="number" value="100">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Waste bags per week</label>
+            <input id="qe_waste" class="form-control" type="number" value="2">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">New clothes per month</label>
+            <input id="qe_clothes" class="form-control" type="number" value="2">
+          </div>
+
+          <div class="mt-3">
+            <div class="d-flex justify-content-between">
+              <div><strong>Estimated monthly CO₂</strong></div>
+              <div id="qe_result" class="fs-5 text-success">— kgCO₂e</div>
+            </div>
+            <small class="text-muted">Quick estimate uses a rough rule-of-thumb for instant feedback only.</small>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <a id="qe_go_calc" class="btn btn-primary" href="{{ url_for('personal') }}">Open full calculator</a>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

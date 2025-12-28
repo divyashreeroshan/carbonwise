@@ -1,0 +1,63 @@
+:root{
+  --green-1: #A3DC9A;
+  --green-2: #DEE791;
+  --yellow-1: #FFF9BD;
+  --peach: #FFD6BA;
+  --muted: #6b6b6b;
+  --card-radius: 14px;
+}
+
+/* general */
+body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color: #213; }
+.container { max-width: 1100px; }
+
+/* hero */
+.hero {
+  background: linear-gradient(135deg, rgba(163,220,154,0.12) 0%, rgba(222,231,145,0.06) 100%);
+  border-radius: 18px;
+  padding: 36px;
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s ease;
+  box-shadow: 0 6px 30px rgba(16, 24, 32, 0.06);
+}
+.hero-title { color: #064a2e; font-weight:700; margin-bottom: 0.3rem; }
+.hero-sub { color: var(--muted); margin-bottom: 1rem; }
+.hero-art { max-height: 300px; transform: translateY(0); transition: transform .6s ease; }
+
+/* CTA buttons */
+.btn-cta {
+  background: linear-gradient(90deg, var(--green-1), var(--green-2));
+  color: #072; border: none; font-weight: 700;
+  box-shadow: 0 6px 18px rgba(163,220,154,0.18);
+}
+.btn-cta:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(163,220,154,0.2); }
+
+/* floating badges */
+.floating-badges { position: absolute; right: 24px; top: 24px; display:flex; gap:8px; flex-wrap:wrap; }
+.badge { padding: 0.45rem 0.65rem; border-radius: 999px; color: #064a2e; font-weight:600; background: rgba(255,255,255,0.75); box-shadow:0 4px 10px rgba(0,0,0,0.04); }
+.bg-pale { background: linear-gradient(180deg, var(--green-2), var(--yellow-1)); }
+.bg-paler { background: linear-gradient(180deg, var(--yellow-1), var(--peach)); }
+.bg-soft { background: linear-gradient(180deg, #e9f6e9, var(--green-2)); }
+
+/* feature cards */
+.feature-card {
+  background: white; border-radius: var(--card-radius); padding: 20px;
+  transition: transform .25s ease, box-shadow .25s ease;
+  cursor: pointer; height:100%;
+  box-shadow: 0 8px 20px rgba(9,10,10,0.04);
+}
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+  border: 1px solid rgba(3,100,70,0.06);
+}
+
+/* modal quick estimate result */
+#qe_result { min-width: 110px; text-align: right; }
+
+/* small responsiveness tweak */
+@media (max-width: 768px) {
+  .hero-art { max-height: 220px; }
+  .floating-badges { display:none; }
+}

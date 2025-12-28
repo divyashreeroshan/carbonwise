@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Waste</h2>
+<form method="post" action="{{ url_for('waste') }}">
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Waste bag size</label>
+      <select name="waste_bag" class="form-select">
+        {% for opt in ['small','medium','large','extra large'] %}
+          <option {% if data.get('waste_bag')==opt %}selected{% endif %}>{{ opt }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Waste bags per week</label>
+      <input name="waste_count" class="form-control" type="number" value="{{ data.get('waste_count','0') }}">
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Recycling (choose all that apply)</label><br>
+    {% for opt in ['Plastic','Paper','Metal','Glass'] %}
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="recycle" value="{{ opt }}"
+           {% if opt in (data.get('recycle') or []) %}checked{% endif %}>
+        <label class="form-check-label">{{ opt }}</label>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <a class="btn btn-outline-secondary" href="{{ url_for('travel') }}">Back</a>
+    <button class="btn btn-primary" type="submit">Next: Energy</button>
+  </div>
+</form>
+{% endblock %}

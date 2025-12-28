@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Travel</h2>
+<form method="post" action="{{ url_for('travel') }}">
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label class="form-label">Transport</label>
+      <select name="transport" class="form-select" id="transportSelect">
+        {% for opt in ['public','private','walk/bicycle'] %}
+          <option {% if data.get('transport')==opt %}selected{% endif %}>{{ opt }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Vehicle Type</label>
+      <select name="vehicle_type" class="form-select">
+        {% for opt in ['None','petrol','diesel','hybrid','lpg','electric'] %}
+          <option {% if data.get('vehicle_type')==opt %}selected{% endif %}>{{ opt }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Monthly distance (km)</label>
+    <input name="vehicle_km" class="form-control" type="number" value="{{ data.get('vehicle_km','0') }}">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Air travel frequency</label>
+    <select name="air_travel" class="form-select">
+      {% for opt in ['never','rarely','frequently','very frequently'] %}
+        <option {% if data.get('air_travel')==opt %}selected{% endif %}>{{ opt }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <a class="btn btn-outline-secondary" href="{{ url_for('personal') }}">Back</a>
+    <button class="btn btn-primary" type="submit">Next: Waste</button>
+  </div>
+</form>
+{% endblock %}

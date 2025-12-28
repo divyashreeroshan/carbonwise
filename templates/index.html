@@ -1,0 +1,68 @@
+<!-- templates/index.html -->
+{% extends 'base.html' %}
+{% block content %}
+<h2>Enter your details</h2>
+
+<form method="post" action="/predict">
+  <fieldset>
+    <legend>Personal</legend>
+    Height (cm): <input name="height" type="number" value="160"><br>
+    Weight (kg): <input name="weight" type="number" value="75"><br>
+    Gender: <select name="sex"><option>female</option><option>male</option></select><br>
+    Diet: <select name="diet"><option>omnivore</option><option>pescatarian</option><option>vegetarian</option><option>vegan</option></select><br>
+    Social Activity: <select name="social"><option>never</option><option>often</option><option>sometimes</option></select>
+  </fieldset>
+
+  <fieldset>
+    <legend>Travel</legend>
+    Transport:
+    <select name="transport" id="transport">
+      <option value="public">public</option>
+      <option value="private">private</option>
+      <option value="walk/bicycle">walk/bicycle</option>
+    </select><br>
+    Vehicle Type (if private):
+    <select name="vehicle_type" id="vehicle_type">
+      <option>None</option><option>petrol</option><option>diesel</option><option>hybrid</option><option>lpg</option><option>electric</option>
+    </select><br>
+    Vehicle Monthly Distance Km: <input name="vehicle_km" type="number" value="0"><br>
+    Air travel frequency:
+    <select name="air_travel"><option>never</option><option>rarely</option><option>frequently</option><option>very frequently</option></select>
+  </fieldset>
+
+  <fieldset>
+    <legend>Waste</legend>
+    Waste Bag Size: <select name="waste_bag"><option>small</option><option>medium</option><option>large</option><option>extra large</option></select><br>
+    Waste Bag Weekly Count: <input name="waste_count" type="number" value="0"><br>
+    Recycle:
+    <label><input type="checkbox" name="recycle" value="Plastic"> Plastic</label>
+    <label><input type="checkbox" name="recycle" value="Paper"> Paper</label>
+    <label><input type="checkbox" name="recycle" value="Metal"> Metal</label>
+    <label><input type="checkbox" name="recycle" value="Glass"> Glass</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Energy</legend>
+    Heating Energy Source:
+    <select name="heating_energy"><option>natural gas</option><option>electricity</option><option>wood</option><option>coal</option></select><br>
+    Cooking systems (choose multiple):<br>
+    <label><input type="checkbox" name="for_cooking" value="microwave"> Microwave</label>
+    <label><input type="checkbox" name="for_cooking" value="oven"> Oven</label>
+    <label><input type="checkbox" name="for_cooking" value="grill"> Grill</label>
+    <label><input type="checkbox" name="for_cooking" value="airfryer"> Airfryer</label>
+    <label><input type="checkbox" name="for_cooking" value="stove"> Stove</label><br>
+    Energy efficiency: <select name="energy_efficiency"><option>No</option><option>Yes</option><option>Sometimes</option></select><br>
+    How many hours TV/PC daily: <input name="daily_tv_pc" type="number" value="0"><br>
+    Internet daily hours: <input name="internet_daily" type="number" value="0"><br>
+  </fieldset>
+
+  <fieldset>
+    <legend>Consumption</legend>
+    Shower frequency: <select name="shower"><option>daily</option><option>twice a day</option><option>more frequently</option><option>less frequently</option></select><br>
+    Monthly Grocery Bill: <input name="grocery_bill" type="number" value="0"><br>
+    Clothes monthly: <input name="clothes_monthly" type="number" value="0"><br>
+  </fieldset>
+
+  <button type="submit">Calculate Your Carbon Footprint</button>
+</form>
+{% endblock %}

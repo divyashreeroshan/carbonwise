@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Consumption</h2>
+<form method="post" action="{{ url_for('consumption') }}">
+  <div class="mb-3">
+    <label class="form-label">Monthly grocery bill (₹ / $)</label>
+    <input name="grocery_bill" class="form-control" type="number" value="{{ data.get('grocery_bill','0') }}">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Clothes purchased monthly</label>
+    <input name="clothes_monthly" class="form-control" type="number" value="{{ data.get('clothes_monthly','0') }}">
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <a class="btn btn-outline-secondary" href="{{ url_for('energy') }}">Back</a>
+    <button class="btn btn-success" type="submit">Calculate</button>
+  </div>
+</form>
+{% endblock %}

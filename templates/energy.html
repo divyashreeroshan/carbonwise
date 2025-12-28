@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Energy</h2>
+<form method="post" action="{{ url_for('energy') }}">
+  <div class="mb-3">
+    <label class="form-label">Heating source</label>
+    <select name="heating_energy" class="form-select">
+      {% for opt in ['natural gas','electricity','wood','coal'] %}
+        <option {% if data.get('heating_energy')==opt %}selected{% endif %}>{{ opt }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Cooking systems</label><br>
+    {% for opt in ['microwave','oven','grill','airfryer','stove'] %}
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="for_cooking" value="{{ opt }}"
+          {% if opt in (data.get('for_cooking') or []) %}checked{% endif %}>
+        <label class="form-check-label">{{ opt }}</label>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <label class="form-label">Energy efficiency consideration</label>
+      <select name="energy_efficiency" class="form-select">
+        {% for opt in ['No','Yes','Sometimes'] %}
+          <option {% if data.get('energy_efficiency')==opt %}selected{% endif %}>{{ opt }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-4 mb-3">
+      <label class="form-label">TV/PC hours per day</label>
+      <input name="daily_tv_pc" class="form-control" type="number" value="{{ data.get('daily_tv_pc','0') }}">
+    </div>
+    <div class="col-md-4 mb-3">
+      <label class="form-label">Internet hours per day</label>
+      <input name="internet_daily" class="form-control" type="number" value="{{ data.get('internet_daily','0') }}">
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <a class="btn btn-outline-secondary" href="{{ url_for('waste') }}">Back</a>
+    <button class="btn btn-primary" type="submit">Next: Consumption</button>
+  </div>
+</form>
+{% endblock %}

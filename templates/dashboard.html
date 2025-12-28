@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Dashboard</h2>
+  <form method="post" action="{{ url_for('clear_history') }}">
+    <button class="btn btn-danger btn-sm" type="submit">Clear History</button>
+  </form>
+</div>
+
+{% if history %}
+  <div class="row g-3">
+    {% for rec in history %}
+      <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+          <div class="row g-0">
+            <div class="col-5">
+              {% if rec.chart %}
+                <a href="#" class="chart-thumb-link" data-chart="{{ url_for('static', filename=rec.chart) }}">
+                  <img src="{{ url_for('static', filename=rec.chart) }}" class="img-fluid rounded-start" alt="chart" style="object-fit:cover; height:100%; width:100%; max-height:200px;">
+                </a>
+              {% else %}
+                <div class="d-flex align-items-center justify-content-center bg-light" style="height:100%;min-height:150px;">
+                  <small class="text-muted">No chart</small>
+                </div>
+              {% endif %}
+            </div>
+            <div class="col-7">
+              <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <h5 class="card-title mb-1">Prediction: <strong>{{ rec.prediction }} kgCO₂e</strong></h5>
+                  <small class="text-muted">{{ rec.timestamp[:19].replace('T',' ') }}</small>
+                </div>
+                <p class="mb-1">Body type: <strong>{{ rec.body_type }}</strong></p>
+                <p class="mb-2"><small class="text-muted">Top suggestion: {{ rec.insights.summary.top_tip if rec.insights else '—' }}</small></p>
+
+                {% if rec.insights and rec.insights.recommendations %}
+                  <div class="accordion" id="acc-{{ rec.id }}">
+                    {% for r in rec.insights.recommendations %}
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="header-{{ rec.id }}-{{ loop.index }}">
+                          <button class="accordion-button collapsed small" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ rec.id }}-{{ loop.index }}" aria-expanded="false">
+                            {{ r.title }} <span class="text-muted ms-2">({{ r.estimate_kg_per_month }} kg/mo)</span>
+                          </button>
+                        </h2>
+                        <div id="collapse-{{ rec.id }}-{{ loop.index }}" class="accordion-collapse collapse" data-bs-parent="#acc-{{ rec.id }}">
+                          <div class="accordion-body small">
+                            <p class="mb-1">{{ r.detail }}</p>
+                            {% if r.why %}<p class="text-muted mb-0"><em>{{ r.why }}</em></p>{% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  <p class="small text-muted mb-0">No detailed insights available.</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Chart lightbox modal -->
+  <div class="modal fade" id="chartModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-body text-center p-0">
+          <img id="chartModalImg" src="" alt="chart" class="img-fluid w-100" style="max-height:80vh; object-fit:contain;">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% else %}
+  <p>No predictions yet. Use the calculator to create one.</p>
+{% endif %}
+{% endblock %}
